@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 </title>
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script><!--  引包-->
+</head>
+<body>
+<div id="app">   <!--父子组件交互-->
+    <parent>
+        <div slot="one">我是插槽内容</div>
+        <div>我是插槽内容2</div>
+    </parent>
+</div>
+<script type="text/javascript">
+
+    var Child={
+		template: `
+		<div>
+		    我是子组件
+		</div>`,
+        data:function () {
+            return {
+            	msg:'hello'
+            }
+        },
+	    // vue 声明周期钩子
+        created(){
+			console.log(this.$parent.msg)
+        }
+	};
+	// slot标签留空给插槽内容,通过名字具体  组件嵌套组件时用
+	var Parent = {
+		template: `
+		<div>
+		    我是父组件
+		    <slot name="one"></slot>
+		    <child ref="childs"></child>
+		</div>`,
+		data:function () {
+			return {
+				msg:'我是父组件'
+			}
+		},
+        components:{
+	        Child
+        },
+
+        // vue 声明周期钩子
+       /* mounted(){
+			console.log(this.$refs.childs.$el)  // 拿子组件dom节点
+			console.log(this.$refs.childs.msg)  // 拿子组件dom节点
+        }*/
+	};
+
+
+	new Vue({
+		el: '#app', // 目的地
+		// 子组件
+		components: {
+			Parent
+		},
+		data: function () {
+			return {
+			}
+		},
+		methods: {
+		}
+	})
+
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 </title>
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script><!--  引包-->
+</head>
+<body>
+<div id="app">
+    我输入的：<input type="text" name="" v-model="inputString"  > <br>
+    我输出的：{{inputString}}<br>
+    <!--翻转输出：{{inputString|reversal}}<br>-->
+    {{inputString|reversal("翻转输出:")}}<br>
+
+
+</div>
+<script type="text/javascript">
+    // 全局过滤器
+    Vue.filter('reversal',function (val,arg2) {
+	    return arg2+val.split('').reverse().join('');
+    })
+
+	new Vue({
+		el: '#app', // 目的地
+		// 声明变量
+		data: function () {
+			console.log(this);
+			return {
+				inputString:''
+			}
+		},
+       /* 过滤器*/
+       /* filters:{
+            reversal(val){  // 自己定义的过滤器，名称是reversal
+                // val 是第一个参数，肯定是模板里想要过滤的变量;可以在模板里传多个参数进来 {{inputString|reversal('lichuyan')}}
+            	return val.split('').reverse().join('');
+            }
+        },*/
+		/* 方法*/
+		methods:{
+			change:function () {
+				this.name='我改变了'
+			}
+		}
+	})
+
+</script>
+</body>
+</html>

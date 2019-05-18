@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 </title>
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+   <!-- 单向数据绑定-->
+    <input type="text" v-bind:value="name"  :class="name">
+    <br>
+
+    <!-- 双向数据绑定-->
+    <input type="text" v-model:value="name"  :class="name">
+    {{name}}
+  <!--  事件绑定-->
+    <button v-on:click="change">点击我改变name的值</button>
+
+</div>
+<script type="text/javascript">
+	new Vue({
+		el: '#app', // 目的地
+		data: function () {   // 声明变量
+			return {
+				name:'lichuan',
+			}
+		},
+        methods:{
+			change:function () {
+                this.name='我改变了'
+			}
+        }
+	})
+
+</script>
+</body>
+</html>

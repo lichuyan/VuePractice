@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 </title>
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script><!--  引包-->
+</head>
+<body>
+<div id="app">   <!--父子组件交互-->
+    <parent>
+
+    </parent>
+</div>
+<script type="text/javascript">
+
+    // 站在子组件--公共组件--开发。父给我通过输入树形，我给父通过事件
+	// 子组件
+	var Child={
+		template: `
+		<div>
+		    我是子组件
+		    父给我的是：{{sendchilid}}
+		    <button  v-on:click="send">点击</button>
+		</div>`,
+		props:['sendchilid'],
+        methods:{
+	        send() {
+                this.$emit('baba','这是儿子给你的');
+			}
+        }
+	};
+
+	// 父组件
+	var Parent = {
+		template: `
+		<div>
+		    我是父组件{{msg}}
+		    <child sendchilid="我是父" @baba="reserve"></child>
+
+		</div>`,
+		data:function () {
+			return {
+				msg:''
+			}
+		},
+		components:{
+			Child
+		},
+        methods:{
+	        reserve:function (val) {
+	        	console.log('=========孩子传来的',val)
+	        	this.msg=val;
+	        }
+        }
+	};
+
+
+	new Vue({
+		el: '#app', // 目的地
+		// 子组件
+		components: {
+			Parent
+		},
+		data: function () {
+			return {
+			}
+		},
+		methods: {
+		}
+	})
+
+</script>
+</body>
+</html>

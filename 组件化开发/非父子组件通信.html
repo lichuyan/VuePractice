@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 </title>
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script><!--  引包-->
+</head>
+<body>
+<div id="app">
+    <my-header></my-header>
+    <hr>
+    <my-body></my-body>
+</div>
+<script type="text/javascript">
+    // 创建一个空的实例
+    Vue.prototype.$bus=new Vue();
+
+	var MyHeader={
+		template: `
+		<div>
+		    我是头部{{headermsg}}
+		</div>`,
+		data:function () {
+			return {
+				headermsg:'我是头部的信息'
+			}
+		},
+        created(){
+		/*	var self=this; // 将this指会header
+			self.$bus.$on('sending',(data)=>{
+				self.headermsg=data;
+			})*/
+		// 改成箭头函数，改变this指向
+	        this.$bus.$on('sending',(data)=>{
+		        this.headermsg=data;
+	        })
+
+        }
+	};
+
+	var MyBody = {
+		template: `
+		<div>
+		    我是身体
+		    <button @click="send">点击发送消息出去</button>
+		</div>`,
+		data:function () {
+			return {
+				bodymsg:'身体信息'
+			}
+		},
+        methods:{
+			send(){
+                this.$bus.$emit('sending','我是身体数据')
+            }
+        }
+	};
+
+
+	new Vue({
+		el: '#app', // 目的地
+		// 子组件
+		components: {
+			MyHeader,
+			MyBody
+		},
+		data: function () {
+			return {
+			}
+		},
+		methods: {
+		}
+	})
+
+</script>
+</body>
+</html>

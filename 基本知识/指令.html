@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 </title>
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--内容显示-->
+    <div>
+        <div v-text="mytext"></div>  <!--一个坑位-->
+    </div>
+    <hr>
+    <div v-html="myhtml"></div>
+    <hr>
+   <!-- 条件显示&&v-if-->
+    <button v-if="num==1">1</button>
+    <button v-else-if="num==2">2</button>
+    <button v-else>3</button>
+
+    <!-- 条件显示&&v-show-->
+    <button v-show="showBtn">4</button>
+
+   <!--   数据循环-->
+    <ul>
+        <li v-for="(item,index) in arr">{{index}}--{{item}}</li>
+    </ul>
+
+    <ul>
+        <li v-for="(oj,key,index) in obj">{{oj}}-{{key}}-{{index}}</li>
+    </ul>
+
+
+
+</div>
+<script type="text/javascript">
+	new Vue({
+		el: '#app', // 目的地
+		data: function () {
+			return {
+				mytext: 'hello vue', // 声明变量 + 赋值
+				myhtml: 'hello myhtml',
+                num:5,
+				showBtn:true,
+                arr:['篮球','足球','乒乓球'],
+                obj:{
+					paly:'打篮球',
+                    people:'ming',
+                    age:12
+                }
+			}
+		}
+	})
+
+</script>
+</body>
+</html>

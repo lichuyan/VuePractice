@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 </title>
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script><!--  引包-->
+</head>
+<body>
+<div id="app">   <!--父子组件交互-->
+    <my-header></my-header>
+    <my-body></my-body>
+    <my-footer></my-footer>
+</div>
+<script type="text/javascript">
+	/*----------------------- 组件开发三部曲声明、注册、使用--------------------------*/
+	var MyHeader={
+		template:`
+		<div>我是头组件</div>`,
+		/*var Header = { template:'模板' , data是一个函数,methods:功能,components:子组件们 }//局
+		部声明*/
+    }
+	var MyBody={
+		template:`<div>我是身体</div>`,
+	}
+
+	/*--------------------全局创建组件--------------------*/
+	// 全局的，在哪里都可 用，不要注册，直接使用
+	Vue.component('MyFooter', {
+        template:`<div>我是底部</div>`
+	})
+
+	new Vue({
+		el: '#app', // 目的地
+        // 子组件
+        components:{
+			MyHeader,
+            MyBody
+        },
+		// 定义声明变量
+		data: function () {
+			return {
+				msg:{text:''},
+				n1:'',
+				n2:'',
+				n3:'1'
+			}
+		},
+		/* 方法*/
+		methods:{
+			change:function () {
+				this.name='我改变了'
+			}
+		}
+	})
+
+</script>
+</body>
+</html>
