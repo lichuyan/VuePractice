@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+  <div>
+     <!-- 路由跳转--标签跳转-->
+      <router-link to='/login'>去登录</router-link>
+      <router-link to='/register'>去注册</router-link>
+
+      <!-- 路由跳转--通过js控制跳转-->
+      <button @click="goregiste">我要去注册</button>
+
+      <button @click="goback">返回上一页</button>
+
+      <!--使用组件留坑-->
+      <router-view></router-view>
+  </div>
+</div>
+<script type="text/javascript">
+    /*---------------------其他组件----------------------*/
+    var Login={
+        template:`
+		<div>我是登录页面</div>
+        `
+    };
+    var Register={
+        template:`
+		<div>我是注册页面</div>
+        `
+    };
+
+    /*---------------------真正组件----------------------*/
+
+    // 安装插件
+    Vue.use(VueRouter);
+    // 创建路由对象
+    var router=new VueRouter({
+        //配置路由
+        routes:[
+            {path:'/login',name:'login',component:Login},
+            {path:'/register',name:'register',component:Register}
+        ]
+    });
+    new Vue({
+        el: '#app', // 目的地
+        router:router,
+        data: function () {
+            return {
+            }
+        },
+        methods:{
+            goregiste(){
+                // 效果一样，但是replace不会向history里面添加新的记录，历史记录
+//                this.$router.push(  {path:'/register'})
+                this.$router.replace(  {path:'/register'})
+            },
+            goback(){
+                this.$router.go(-1);
+            }
+        }
+    })
+</script>
+</body>
+</html>
