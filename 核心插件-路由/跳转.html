@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 </title>
+</head>
+<body>
+<a href="#/login">登录</a>  <!--锚点就是# login 是锚点值-->
+<a href="#/register">注册</a>
+
+<div id="app"></div>
+<script >
+
+    var div1 = document.getElementById("app");
+    window.addEventListener('hashchange', function(e) {
+        console.log(location.hash);
+        if(location.hash=='#/login'){
+            div1.innerText='我是登录页面';
+        }else {
+            div1.innerText='我是注册页面';
+        }
+    })
+</script>
+</body>
+</html>
