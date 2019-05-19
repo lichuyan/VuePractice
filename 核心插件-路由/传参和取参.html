@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>
+
+        <!--<router-link to='/login'>去登录</router-link>-->   <!--用js跳转，push({})就行了-->
+        <router-link :to={name:'login',query:{id:'123'}}>去登录</router-link>
+        <router-link :to={name:'register',params:{foo:'bar'}}>去注册</router-link>
+        <button @click='jslink'>js跳转去登录</button>
+
+        <!--使用组件留坑-->
+        <router-view :key="$route.fullPath"></router-view>
+    </div>
+</div>
+<script type="text/javascript">
+	/*---------------------其他组件----------------------*/
+	var Login={
+		template:`
+		<div>我是登录页面
+		<span>{{msg}}</span>
+		</div>
+        `,
+        data(){
+			return {
+				msg:''
+            }
+        },
+        created(){
+			this.msg=this.$route.query.id;
+        }
+	};
+	var Register={
+		template:`
+		<div>我是注册页面
+		<!--<span>{{msg}}</span></div>-->
+		<span>{{foo}}</span></div>
+        `,
+		// data(){
+		// 	return {
+		// 		msg:''
+		// 	}
+		// },
+		// created(){
+		// 	this.msg=this.$route.params.foo;
+		// }
+        props:['foo']
+
+	};
+
+	/*---------------------真正组件----------------------*/
+
+	// 安装插件
+	Vue.use(VueRouter);
+	// 创建路由对象
+	var router=new VueRouter({
+		//配置路由
+		routes:[
+			{path:'/login',name:'login',component:Login},
+			// {path:'/register/:foo',name:'register',component:Register}
+			{path:'/register/:foo',name:'register',props:true,component:Register}
+		]
+	});
+	new Vue({
+		el: '#app', // 目的地
+		router:router,
+		data: function () {
+			return {
+			}
+		},
+		methods:{
+			jslink(){
+				this.$router.push({name:'login',query:{id:'456'}})
+			}
+		}
+	})
+</script>
+</body>
+</html>

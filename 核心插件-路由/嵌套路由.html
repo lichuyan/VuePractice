@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>
+
+        <!--使用组件留坑-->
+        <router-view ></router-view>
+    </div>
+</div>
+<script type="text/javascript">
+	/*---------------------其他组件----------------------*/
+	var Nav={
+		template:`
+		<div>
+		    <router-view ></router-view>
+			<router-link :to="{name:'nav.index'}">首页</router-link>
+			<router-link :to="{name:'nav.personal'}">个人中心</router-link>
+			<router-link  :to="{name:'nav.message'}">咨询</router-link>
+		</div>
+        `
+	};
+	var Index={
+		template:`
+		<div>首页
+		</div>
+        `
+	};
+	var Personal={
+		template:`
+		<div>个人中心
+		</div>
+        `
+	};
+	var Message={
+		template:`
+		<div>咨询
+		</div>
+        `
+	};
+
+	/*---------------------真正组件----------------------*/
+
+	// 安装插件
+	Vue.use(VueRouter);
+	// 创建路由对象
+	var router=new VueRouter({
+		//配置路由
+		routes:[
+			{
+				path:'/nav',
+                name:'nav',
+                component:Nav,
+                // 嵌套路由，子路由
+                children:[
+	                // 路由重定向
+	                {path:'',redirect:'/nav/index'},
+                	// 相对于上面的，就不用加/了，name是显示的名字
+
+	                {path:'index',name:'nav.index',component:Index},
+	                {path:'personal',name:'nav.personal',component:Personal},
+	                {path:'message',name:'nav.message',component:Message}
+                ]
+            }
+		]
+	});
+	new Vue({
+		el: '#app', // 目的地
+		router:router,
+		data: function () {
+			return {
+			}
+		},
+		methods:{
+			jslink(){
+				this.$router.push({name:'login',query:{id:'456'}})
+			}
+		}
+	})
+</script>
+</body>
+</html>
