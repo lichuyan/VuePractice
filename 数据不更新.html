@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>更改数据不更新问题</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+        <ul>
+            <li v-for="(item,index) in obj" :key='index'>
+                {{item}}-{{index}}
+            </li>
+        </ul>
+    <button @click="add">添加新属性</button>
+</div>
+<script type="text/javascript">
+
+	new Vue({
+		el: '#app', // 目的
+		data: function () {
+			return {
+				obj:{
+					'a':'我是a',
+					'b':'我是b',
+					'c':'我是c',
+                }
+			}
+		},
+		methods:{
+			add(){
+				// this.obj.d='我是d';
+				console.log(this.obj)
+                this.$set(this.obj,'d','我是d')
+            }
+		}
+	})
+</script>
+</body>
+</html>
